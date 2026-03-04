@@ -68,21 +68,21 @@ def test_split_stanzas_normalizes_whitespace():
 def test_parse_text_simple():
     text = """Preamble text here.
 
-BOOK I
+BOOK I.
 
-CANTO I
+Canto I.
 
 The sage Valmiki praised the hero Rama for his great deeds.
 
 Rama was the eldest son of King Dasaratha of Ayodhya city.
 
-CANTO II
+Canto II.
 
 Vishvamitra came to the court to seek help from Rama.
 
-BOOK II
+BOOK II.
 
-CANTO I
+Canto I.
 
 Kaikeyi asked for boons that would send Rama to the forest.
 """
@@ -96,15 +96,15 @@ Kaikeyi asked for boons that would send Rama to the forest.
 
 def test_parse_text_kanda_assignment():
     text = """
-BOOK I
+BOOK I.
 
-CANTO I
+Canto I.
 
 The mighty hero Rama prepared for his great journey ahead.
 
-BOOK III
+BOOK III.
 
-CANTO I
+Canto I.
 
 In the Dandaka forest Rama encountered the demon Khara.
 """
@@ -126,15 +126,15 @@ def test_parse_text_no_books():
 
 def test_verse_ids_unique():
     text = """
-BOOK I
+BOOK I.
 
-CANTO I
+Canto I.
 
 First verse here with enough characters to pass the minimum length.
 
 Second verse here with enough characters to also pass the length.
 
-CANTO II
+Canto II.
 
 Another verse in the second canto with sufficient text content.
 """
@@ -145,9 +145,9 @@ Another verse in the second canto with sufficient text content.
 
 def test_parse_preserves_kanda_name():
     text = """
-BOOK IV
+BOOK IV.
 
-CANTO I
+Canto I.
 
 The monkeys gathered at Kishkindha mountain ready for battle.
 """

@@ -18,8 +18,12 @@ KANDA_NAMES = {
 }
 
 # Regex patterns for Griffith's translation structure
-BOOK_PATTERN = re.compile(r"^BOOK\s+(I{1,3}V?|VI?)\b", re.MULTILINE)
-CANTO_PATTERN = re.compile(r"^CANTO\s+([IVXLC]+)\b", re.MULTILINE)
+BOOK_PATTERN = re.compile(
+    r"^BOOK\s+(I{1,3}V?|VI?)\.?", re.MULTILINE,
+)
+CANTO_PATTERN = re.compile(
+    r"^Canto\s+([IVXLC]+)\.", re.MULTILINE,
+)
 
 ROMAN_MAP = {
     "I": 1, "II": 2, "III": 3, "IV": 4, "V": 5, "VI": 6,
