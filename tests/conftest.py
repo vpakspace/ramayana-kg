@@ -54,7 +54,11 @@ if "openai" not in sys.modules:
                 {"create": staticmethod(lambda **kw: None)},
             )()
 
+    class _FakeAPITimeoutError(Exception):
+        pass
+
     _openai.OpenAI = _FakeOpenAI
+    _openai.APITimeoutError = _FakeAPITimeoutError
     sys.modules["openai"] = _openai
 
 # Stub thefuzz

@@ -4,8 +4,9 @@ from __future__ import annotations
 
 import json
 import logging
+import time
 
-from openai import OpenAI
+from openai import APITimeoutError, OpenAI
 
 from ramayana_kg.config import settings
 from ramayana_kg.models import EntityType, ExtractedEntity, Verse
@@ -49,18 +50,38 @@ def extract_entities_batch(
         f"[{v.verse_id}] {v.text}" for v in verses
     )
 
-    response = client.chat.completions.create(
-        model=settings.llm_model,
-        messages=[
-            {"role": "system", "content": "You extract entities from ancient Indian texts."},
-            {"role": "user", "content": ENTITY_EXTRACTION_PROMPT.format(verses_text=verses_text)},
-        ],
-        temperature=0.1,
-        max_tokens=2000,
-    )
+    for attempt in range(3):
+        try:
+            response = client.chat.completions.create(
+                model=settings.llm_model,
+                messages=[
+                    {
+                        "role": "system",
+                        "content": "You extract entities from ancient Indian texts.",
+                    },
+                    {
+                        "role": "user",
+                        "content": ENTITY_EXTRACTION_PROMPT.format(
+                            verses_text=verses_text
+                        ),
+                    },
+                ],
+                temperature=0.1,
+                max_tokens=2000,
+                timeout=60,
+            )
+            raw = response.choices[0].message.content or "[]"
+            return _parse_entities(raw, verses)
+        except (APITimeoutError, Exception) as e:
+            wait = 2 ** (attempt + 1)
+            logger.warning(
+                "API call failed (attempt %d/3): %s. Retrying in %ds...",
+                attempt + 1, str(e)[:100], wait,
+            )
+            time.sleep(wait)
 
-    raw = response.choices[0].message.content or "[]"
-    return _parse_entities(raw, verses)
+    logger.error("All retries exhausted for batch, skipping")
+    return []
 
 
 def _parse_entities(raw_json: str, verses: list[Verse]) -> list[ExtractedEntity]:
