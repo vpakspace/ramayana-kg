@@ -76,7 +76,7 @@ def generate_answer(
     driver: Driver,
     mode: str = "hybrid",
     client: OpenAI | None = None,
-    database: str = "ramayana",
+    database: str = "",
     language: str = "en",
 ) -> QAResult:
     """Generate an answer using the specified retrieval mode.
@@ -93,6 +93,7 @@ def generate_answer(
         QAResult with answer, sources, and graph context.
     """
     client = client or OpenAI(api_key=settings.openai_api_key)
+    database = database or settings.neo4j_database
     search_results: list[SearchResult] = []
     graph_context = GraphContext()
 

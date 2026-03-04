@@ -117,17 +117,18 @@ def co_occurrence(
 
 
 def search_entities(
-    driver: Driver, query: str, limit: int = 10, database: str = "ramayana",
+    driver: Driver, search_query: str, limit: int = 10,
+    database: str = "ramayana",
 ) -> list[dict]:
     """Fulltext search across all entity types."""
     with driver.session(database=database) as session:
         result = session.run(
-            "CALL db.index.fulltext.queryNodes('entity_fulltext', $query) "
+            "CALL db.index.fulltext.queryNodes('entity_fulltext', $q) "
             "YIELD node, score "
             "RETURN node.name AS name, labels(node)[0] AS label, "
             "  node.description AS description, score "
             "ORDER BY score DESC LIMIT $limit",
-            query=query, limit=limit,
+            q=search_query, limit=limit,
         )
         return [dict(r) for r in result]
 
