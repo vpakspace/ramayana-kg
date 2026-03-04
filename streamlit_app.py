@@ -56,7 +56,7 @@ def main():
 
     # --- Tab 2: Hybrid Search ---
     with tabs[1]:
-        _render_search(driver, db, t)
+        _render_search(driver, db, t, lang=lang)
 
     # --- Tab 3: Dashboard ---
     with tabs[2]:
@@ -122,7 +122,7 @@ def _render_explorer(driver, db, t):
                 st.warning(t("no_data"))
 
 
-def _render_search(driver, db, t):
+def _render_search(driver, db, t, lang="en"):
     st.subheader(t("search_header"))
 
     mode_options = {
@@ -136,7 +136,10 @@ def _render_search(driver, db, t):
     question = st.text_input(t("search_input"), placeholder=t("search_placeholder"))
     if st.button(t("search_button")) and question:
         with st.spinner(t("search_thinking")):
-            result = generate_answer(question, driver, mode=mode, database=db)
+            result = generate_answer(
+                question, driver, mode=mode,
+                database=db, language=lang,
+            )
 
         st.markdown(f"### {t('search_answer')}")
         st.write(result.answer)

@@ -80,7 +80,10 @@ def cmd_query(args):
     from ramayana_kg.rag.generator import generate_answer
     driver = get_driver()
     try:
-        result = generate_answer(args.question, driver, mode=args.mode)
+        result = generate_answer(
+            args.question, driver,
+            mode=args.mode, language=args.lang,
+        )
         print(f"\n{'='*60}")
         print(f"Question: {args.question}")
         print(f"Mode: {result.mode}")
@@ -136,7 +139,14 @@ def main():
 
     query_parser = subparsers.add_parser("query", help="Query the knowledge graph")
     query_parser.add_argument("question", help="Question to ask")
-    query_parser.add_argument("--mode", choices=["hybrid", "vector", "graph"], default="hybrid")
+    query_parser.add_argument(
+        "--mode", choices=["hybrid", "vector", "graph"],
+        default="hybrid",
+    )
+    query_parser.add_argument(
+        "--lang", choices=["en", "ru"], default="en",
+        help="Answer language",
+    )
 
     subparsers.add_parser("stats", help="Show graph statistics")
 

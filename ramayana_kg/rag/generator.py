@@ -16,7 +16,8 @@ logger = logging.getLogger(__name__)
 SYSTEM_PROMPT = """You are an expert scholar of the Ramayana, the ancient Indian epic.
 Answer questions based on the provided context from Griffith's translation.
 Be accurate, cite verse references when possible, and provide insightful analysis.
-If the context doesn't contain enough information, say so honestly."""
+If the context doesn't contain enough information, say so honestly.
+{language_instruction}"""
 
 CONTEXT_TEMPLATE = """## Verse Passages
 {verse_passages}
@@ -64,12 +65,19 @@ def format_graph_context(ctx: GraphContext) -> str:
     return "\n".join(parts) if parts else "No graph context available."
 
 
+LANGUAGE_INSTRUCTIONS = {
+    "en": "",
+    "ru": "Always answer in Russian. Keep entity names in their original form.",
+}
+
+
 def generate_answer(
     question: str,
     driver: Driver,
     mode: str = "hybrid",
     client: OpenAI | None = None,
     database: str = "ramayana",
+    language: str = "en",
 ) -> QAResult:
     """Generate an answer using the specified retrieval mode.
 
@@ -79,6 +87,7 @@ def generate_answer(
         mode: "vector", "graph", or "hybrid"
         client: OpenAI client
         database: Neo4j database name
+        language: response language ("en" or "ru")
 
     Returns:
         QAResult with answer, sources, and graph context.
@@ -111,10 +120,15 @@ def generate_answer(
     if len(user_message) > settings.max_context_tokens * 4:
         user_message = user_message[:settings.max_context_tokens * 4]
 
+    lang_instruction = LANGUAGE_INSTRUCTIONS.get(language, "")
+    system_prompt = SYSTEM_PROMPT.format(
+        language_instruction=lang_instruction,
+    ).strip()
+
     response = client.chat.completions.create(
         model=settings.llm_model,
         messages=[
-            {"role": "system", "content": SYSTEM_PROMPT},
+            {"role": "system", "content": system_prompt},
             {"role": "user", "content": user_message},
         ],
         temperature=settings.temperature,
