@@ -35,7 +35,13 @@ def character_profile(driver: Driver, name: str, database: str = "ramayana") -> 
             "name": record["name"],
             "description": record["description"],
             "outgoing": [r for r in record["outgoing"] if r["type"]],
-            "incoming": [r for r in (incoming_record["incoming"] if incoming_record else []) if r["type"]],
+            "incoming": [
+                r for r in (
+                    incoming_record["incoming"]
+                    if incoming_record else []
+                )
+                if r["type"]
+            ],
         }
 
 
@@ -44,9 +50,11 @@ def family_tree(driver: Driver, name: str, database: str = "ramayana") -> list[d
     with driver.session(database=database) as session:
         result = session.run(
             "MATCH (c:Character {name: $name}) "
-            "OPTIONAL MATCH (c)-[r:FATHER_OF|MOTHER_OF|SPOUSE_OF|BROTHER_OF|SISTER_OF|SON_OF]->(t) "
+            "OPTIONAL MATCH (c)-[r:FATHER_OF|MOTHER_OF|SPOUSE_OF"
+            "|BROTHER_OF|SISTER_OF|SON_OF]->(t) "
             "WITH c, collect({rel: type(r), name: t.name}) AS family_out "
-            "OPTIONAL MATCH (s)-[r2:FATHER_OF|MOTHER_OF|SPOUSE_OF|BROTHER_OF|SISTER_OF|SON_OF]->(c) "
+            "OPTIONAL MATCH (s)-[r2:FATHER_OF|MOTHER_OF|SPOUSE_OF"
+            "|BROTHER_OF|SISTER_OF|SON_OF]->(c) "
             "RETURN c.name AS name, family_out, "
             "  collect({rel: type(r2), name: s.name}) AS family_in",
             name=name,
@@ -102,10 +110,15 @@ def co_occurrence(
             limit=top_n,
             kanda_num=kanda_num,
         )
-        return [{"char1": r["char1"], "char2": r["char2"], "count": r["co_count"]} for r in result]
+        return [
+            {"char1": r["char1"], "char2": r["char2"], "count": r["co_count"]}
+            for r in result
+        ]
 
 
-def search_entities(driver: Driver, query: str, limit: int = 10, database: str = "ramayana") -> list[dict]:
+def search_entities(
+    driver: Driver, query: str, limit: int = 10, database: str = "ramayana",
+) -> list[dict]:
     """Fulltext search across all entity types."""
     with driver.session(database=database) as session:
         result = session.run(
@@ -153,7 +166,13 @@ def get_entity_relationships(
         )
         results = []
         for r in outgoing:
-            results.append({"type": r["rel_type"], "direction": "->", "other": r["target"], "description": r["description"]})
+            results.append({
+                "type": r["rel_type"], "direction": "->",
+                "other": r["target"], "description": r["description"],
+            })
         for r in incoming:
-            results.append({"type": r["rel_type"], "direction": "<-", "other": r["source"], "description": r["description"]})
+            results.append({
+                "type": r["rel_type"], "direction": "<-",
+                "other": r["source"], "description": r["description"],
+            })
         return results

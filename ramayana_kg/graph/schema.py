@@ -46,7 +46,10 @@ def create_schema(driver: Driver, database: str = "ramayana") -> None:
             except Exception as e:
                 logger.debug("Index may already exist: %s", e)
 
-    logger.info("Schema created: %d constraints, %d indexes", len(CONSTRAINTS), len(FULLTEXT_INDEXES))
+    logger.info(
+        "Schema created: %d constraints, %d indexes",
+        len(CONSTRAINTS), len(FULLTEXT_INDEXES),
+    )
 
 
 def clear_database(driver: Driver, database: str = "ramayana") -> int:

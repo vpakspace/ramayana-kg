@@ -73,7 +73,10 @@ def test_resolve_entities_preserves_types():
 def test_resolve_entities_merges_descriptions():
     entities = [
         ExtractedEntity(name="Rama", entity_type=EntityType.CHARACTER, description="Prince"),
-        ExtractedEntity(name="Rama", entity_type=EntityType.CHARACTER, description="Avatar of Vishnu"),
+        ExtractedEntity(
+            name="Rama", entity_type=EntityType.CHARACTER,
+            description="Avatar of Vishnu",
+        ),
     ]
     resolved = resolve_entities(entities)
     assert len(resolved) == 1

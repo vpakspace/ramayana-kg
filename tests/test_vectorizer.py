@@ -3,7 +3,6 @@
 from unittest.mock import MagicMock
 
 from ramayana_kg.embeddings.vectorizer import embed_texts, vector_search
-from ramayana_kg.models import Verse
 
 
 def _mock_openai_embeddings(dim=1536):

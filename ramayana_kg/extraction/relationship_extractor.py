@@ -52,8 +52,16 @@ def extract_relationships_batch(
     response = client.chat.completions.create(
         model=settings.llm_model,
         messages=[
-            {"role": "system", "content": "You extract relationships from ancient Indian texts."},
-            {"role": "user", "content": RELATIONSHIP_EXTRACTION_PROMPT.format(verses_text=verses_text)},
+            {
+                "role": "system",
+                "content": "You extract relationships from ancient Indian texts.",
+            },
+            {
+                "role": "user",
+                "content": RELATIONSHIP_EXTRACTION_PROMPT.format(
+                    verses_text=verses_text
+                ),
+            },
         ],
         temperature=0.1,
         max_tokens=2000,

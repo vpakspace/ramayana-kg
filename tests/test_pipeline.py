@@ -1,7 +1,7 @@
 """Tests for pipeline orchestrator (mocked)."""
 
-from unittest.mock import MagicMock, patch
 from pathlib import Path
+from unittest.mock import patch
 
 from ramayana_kg.pipeline import step_download, step_parse
 

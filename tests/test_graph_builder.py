@@ -1,13 +1,13 @@
 """Tests for graph builder (mocked Neo4j)."""
 
-from unittest.mock import MagicMock, call
+from unittest.mock import MagicMock
 
 from ramayana_kg.graph.builder import (
     build_entity_nodes,
     build_relationships,
     build_structural_hierarchy,
 )
-from ramayana_kg.models import EntityType, ExtractedEntity, ExtractedRelationship, RelationshipType, Verse
+from ramayana_kg.models import EntityType, ExtractedEntity, Verse
 
 
 def _make_mock_driver():

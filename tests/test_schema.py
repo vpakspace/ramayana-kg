@@ -2,7 +2,13 @@
 
 from unittest.mock import MagicMock
 
-from ramayana_kg.graph.schema import CONSTRAINTS, FULLTEXT_INDEXES, clear_database, create_schema, get_stats
+from ramayana_kg.graph.schema import (
+    CONSTRAINTS,
+    FULLTEXT_INDEXES,
+    clear_database,
+    create_schema,
+    get_stats,
+)
 
 
 def _mock_driver():

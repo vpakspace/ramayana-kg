@@ -29,7 +29,10 @@ if "neo4j" not in sys.modules:
             return iter([])
 
     _neo4j.Driver = _FakeDriver
-    _neo4j.GraphDatabase = type("GraphDatabase", (), {"driver": staticmethod(lambda *a, **kw: _FakeDriver())})
+    _neo4j.GraphDatabase = type(
+        "GraphDatabase", (),
+        {"driver": staticmethod(lambda *a, **kw: _FakeDriver())},
+    )
     sys.modules["neo4j"] = _neo4j
 
 # Stub openai if not installed
@@ -38,8 +41,18 @@ if "openai" not in sys.modules:
 
     class _FakeOpenAI:
         def __init__(self, **kw):
-            self.chat = type("chat", (), {"completions": type("c", (), {"create": staticmethod(lambda **kw: None)})})()
-            self.embeddings = type("emb", (), {"create": staticmethod(lambda **kw: None)})()
+            self.chat = type(
+                "chat", (), {
+                    "completions": type(
+                        "c", (),
+                        {"create": staticmethod(lambda **kw: None)},
+                    ),
+                },
+            )()
+            self.embeddings = type(
+                "emb", (),
+                {"create": staticmethod(lambda **kw: None)},
+            )()
 
     _openai.OpenAI = _FakeOpenAI
     sys.modules["openai"] = _openai
@@ -85,38 +98,89 @@ from ramayana_kg.models import (
 @pytest.fixture
 def sample_verses():
     return [
-        Verse(kanda="Bala Kanda", kanda_num=1, sarga=1, verse_num=1,
-              text="The glorious Rama, son of Dasaratha, went to the forest with Sita and Lakshmana."),
-        Verse(kanda="Bala Kanda", kanda_num=1, sarga=1, verse_num=2,
-              text="The sage Vishvamitra came to King Dasaratha and asked for Rama's help."),
-        Verse(kanda="Bala Kanda", kanda_num=1, sarga=2, verse_num=1,
-              text="Rama, the mighty warrior, slew the demoness Tataka in the forest."),
-        Verse(kanda="Ayodhya Kanda", kanda_num=2, sarga=1, verse_num=1,
-              text="Kaikeyi demanded that Bharata be crowned king instead of Rama."),
-        Verse(kanda="Sundara Kanda", kanda_num=5, sarga=1, verse_num=1,
-              text="Hanuman leaped across the ocean to reach Lanka and find Sita."),
+        Verse(
+            kanda="Bala Kanda", kanda_num=1, sarga=1, verse_num=1,
+            text="The glorious Rama, son of Dasaratha, "
+            "went to the forest with Sita and Lakshmana.",
+        ),
+        Verse(
+            kanda="Bala Kanda", kanda_num=1, sarga=1, verse_num=2,
+            text="The sage Vishvamitra came to King "
+            "Dasaratha and asked for Rama's help.",
+        ),
+        Verse(
+            kanda="Bala Kanda", kanda_num=1, sarga=2, verse_num=1,
+            text="Rama, the mighty warrior, slew the "
+            "demoness Tataka in the forest.",
+        ),
+        Verse(
+            kanda="Ayodhya Kanda", kanda_num=2, sarga=1, verse_num=1,
+            text="Kaikeyi demanded that Bharata be "
+            "crowned king instead of Rama.",
+        ),
+        Verse(
+            kanda="Sundara Kanda", kanda_num=5, sarga=1, verse_num=1,
+            text="Hanuman leaped across the ocean to "
+            "reach Lanka and find Sita.",
+        ),
     ]
 
 
 @pytest.fixture
 def sample_entities():
     return [
-        ExtractedEntity(name="Rama", entity_type=EntityType.CHARACTER, description="Prince of Ayodhya"),
-        ExtractedEntity(name="Sita", entity_type=EntityType.CHARACTER, description="Wife of Rama"),
-        ExtractedEntity(name="Lakshmana", entity_type=EntityType.CHARACTER, description="Brother of Rama"),
-        ExtractedEntity(name="Hanuman", entity_type=EntityType.CHARACTER, description="Monkey god"),
-        ExtractedEntity(name="Lanka", entity_type=EntityType.LOCATION, description="Demon kingdom"),
-        ExtractedEntity(name="Ayodhya", entity_type=EntityType.LOCATION, description="Rama's city"),
+        ExtractedEntity(
+            name="Rama", entity_type=EntityType.CHARACTER,
+            description="Prince of Ayodhya",
+        ),
+        ExtractedEntity(
+            name="Sita", entity_type=EntityType.CHARACTER,
+            description="Wife of Rama",
+        ),
+        ExtractedEntity(
+            name="Lakshmana", entity_type=EntityType.CHARACTER,
+            description="Brother of Rama",
+        ),
+        ExtractedEntity(
+            name="Hanuman", entity_type=EntityType.CHARACTER,
+            description="Monkey god",
+        ),
+        ExtractedEntity(
+            name="Lanka", entity_type=EntityType.LOCATION,
+            description="Demon kingdom",
+        ),
+        ExtractedEntity(
+            name="Ayodhya", entity_type=EntityType.LOCATION,
+            description="Rama's city",
+        ),
     ]
 
 
 @pytest.fixture
 def sample_relationships():
     return [
-        ExtractedRelationship(source="Rama", target="Sita", rel_type=RelationshipType.SPOUSE_OF),
-        ExtractedRelationship(source="Dasaratha", target="Rama", rel_type=RelationshipType.FATHER_OF),
-        ExtractedRelationship(source="Rama", target="Lakshmana", rel_type=RelationshipType.BROTHER_OF),
-        ExtractedRelationship(source="Hanuman", target="Rama", rel_type=RelationshipType.SERVES),
-        ExtractedRelationship(source="Ravana", target="Sita", rel_type=RelationshipType.KIDNAPS),
-        ExtractedRelationship(source="Rama", target="Ravana", rel_type=RelationshipType.KILLS),
+        ExtractedRelationship(
+            source="Rama", target="Sita",
+            rel_type=RelationshipType.SPOUSE_OF,
+        ),
+        ExtractedRelationship(
+            source="Dasaratha", target="Rama",
+            rel_type=RelationshipType.FATHER_OF,
+        ),
+        ExtractedRelationship(
+            source="Rama", target="Lakshmana",
+            rel_type=RelationshipType.BROTHER_OF,
+        ),
+        ExtractedRelationship(
+            source="Hanuman", target="Rama",
+            rel_type=RelationshipType.SERVES,
+        ),
+        ExtractedRelationship(
+            source="Ravana", target="Sita",
+            rel_type=RelationshipType.KIDNAPS,
+        ),
+        ExtractedRelationship(
+            source="Rama", target="Ravana",
+            rel_type=RelationshipType.KILLS,
+        ),
     ]

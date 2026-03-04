@@ -21,7 +21,10 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
 
     # Explorer tab
     "explorer_search": {"en": "Search entities", "ru": "Поиск сущностей"},
-    "explorer_placeholder": {"en": "Enter entity name (e.g. Rama, Lanka)", "ru": "Введите имя сущности (напр. Rama, Lanka)"},
+    "explorer_placeholder": {
+        "en": "Enter entity name (e.g. Rama, Lanka)",
+        "ru": "Введите имя сущности (напр. Rama, Lanka)",
+    },
     "explorer_results": {"en": "Search Results", "ru": "Результаты поиска"},
     "explorer_profile": {"en": "Entity Profile", "ru": "Профиль сущности"},
     "explorer_relationships": {"en": "Relationships", "ru": "Связи"},
@@ -35,18 +38,27 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     # Search tab
     "search_header": {"en": "Hybrid Search & Question Answering", "ru": "Гибридный Поиск и Ответы"},
     "search_input": {"en": "Ask a question about Ramayana", "ru": "Задайте вопрос о Рамаяне"},
-    "search_placeholder": {"en": "Who is Rama? / What happened in Lanka?", "ru": "Кто такой Рама? / Что произошло на Ланке?"},
+    "search_placeholder": {
+        "en": "Who is Rama? / What happened in Lanka?",
+        "ru": "Кто такой Рама? / Что произошло на Ланке?",
+    },
     "search_mode": {"en": "Retrieval mode", "ru": "Режим поиска"},
     "search_mode_hybrid": {"en": "Hybrid (Vector + Graph)", "ru": "Гибридный (Вектор + Граф)"},
     "search_mode_vector": {"en": "Vector only", "ru": "Только вектор"},
     "search_mode_graph": {"en": "Graph only", "ru": "Только граф"},
     "search_button": {"en": "Ask", "ru": "Спросить"},
-    "search_thinking": {"en": "Searching and generating answer...", "ru": "Поиск и генерация ответа..."},
+    "search_thinking": {
+        "en": "Searching and generating answer...",
+        "ru": "Поиск и генерация ответа...",
+    },
     "search_answer": {"en": "Answer", "ru": "Ответ"},
     "search_confidence": {"en": "Confidence", "ru": "Уверенность"},
     "search_sources": {"en": "Sources ({count})", "ru": "Источники ({count})"},
     "search_graph_ctx": {"en": "Graph Context", "ru": "Графовый контекст"},
-    "search_no_results": {"en": "No results. Run pipeline first.", "ru": "Нет результатов. Запустите pipeline."},
+    "search_no_results": {
+        "en": "No results. Run pipeline first.",
+        "ru": "Нет результатов. Запустите pipeline.",
+    },
 
     # Dashboard tab
     "dash_header": {"en": "Knowledge Graph Dashboard", "ru": "Дашборд Графа Знаний"},
@@ -65,14 +77,20 @@ TRANSLATIONS: dict[str, dict[str, str]] = {
     "cooccur_count": {"en": "Co-mentions", "ru": "Совместные упоминания"},
 
     # Settings tab
-    "settings_header": {"en": "Settings & Pipeline Controls", "ru": "Настройки и управление Pipeline"},
+    "settings_header": {
+        "en": "Settings & Pipeline Controls",
+        "ru": "Настройки и управление Pipeline",
+    },
     "settings_config": {"en": "Current Configuration", "ru": "Текущая конфигурация"},
     "settings_stats": {"en": "Graph Statistics", "ru": "Статистика графа"},
     "settings_pipeline": {"en": "Pipeline Controls", "ru": "Управление Pipeline"},
     "settings_run_pipeline": {"en": "Run Full Pipeline", "ru": "Запустить Pipeline"},
     "settings_running": {"en": "Running pipeline...", "ru": "Pipeline выполняется..."},
     "settings_clear": {"en": "Clear Database", "ru": "Очистить базу"},
-    "settings_clear_confirm": {"en": "Type DELETE to confirm", "ru": "Введите DELETE для подтверждения"},
+    "settings_clear_confirm": {
+        "en": "Type DELETE to confirm",
+        "ru": "Введите DELETE для подтверждения",
+    },
     "settings_clear_button": {"en": "Clear All Data", "ru": "Удалить все данные"},
     "settings_cleared": {"en": "Deleted {count} nodes", "ru": "Удалено {count} узлов"},
 

@@ -20,7 +20,7 @@ from ramayana_kg.extraction.alias_resolver import resolve_entities
 from ramayana_kg.extraction.entity_extractor import extract_all_entities
 from ramayana_kg.extraction.relationship_extractor import extract_all_relationships
 from ramayana_kg.graph.builder import build_graph
-from ramayana_kg.graph.schema import clear_database, create_schema, get_stats
+from ramayana_kg.graph.schema import create_schema, get_stats
 from ramayana_kg.models import Verse
 
 logger = logging.getLogger(__name__)

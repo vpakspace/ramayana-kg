@@ -2,8 +2,8 @@
 
 from __future__ import annotations
 
-import streamlit as st
 import plotly.express as px
+import streamlit as st
 from neo4j import GraphDatabase
 
 from ramayana_kg.config import settings
@@ -27,7 +27,10 @@ KANDA_NAMES = {
 
 @st.cache_resource
 def get_driver():
-    return GraphDatabase.driver(settings.neo4j_uri, auth=(settings.neo4j_user, settings.neo4j_password))
+    return GraphDatabase.driver(
+        settings.neo4j_uri,
+        auth=(settings.neo4j_user, settings.neo4j_password),
+    )
 
 
 def main():

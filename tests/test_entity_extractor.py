@@ -1,6 +1,6 @@
 """Tests for LLM entity extraction."""
 
-from unittest.mock import MagicMock, patch
+from unittest.mock import MagicMock
 
 from ramayana_kg.extraction.entity_extractor import _parse_entities, extract_entities_batch
 from ramayana_kg.models import EntityType, Verse
@@ -76,7 +76,9 @@ def test_extract_entities_batch_calls_openai(sample_verses):
     mock_client = MagicMock()
     mock_response = MagicMock()
     mock_response.choices = [MagicMock()]
-    mock_response.choices[0].message.content = '[{"name": "Rama", "type": "Character", "description": "Hero"}]'
+    mock_response.choices[0].message.content = (
+        '[{"name": "Rama", "type": "Character", "description": "Hero"}]'
+    )
     mock_client.chat.completions.create.return_value = mock_response
 
     entities = extract_entities_batch(sample_verses[:2], client=mock_client)

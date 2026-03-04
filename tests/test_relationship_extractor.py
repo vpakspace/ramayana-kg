@@ -10,7 +10,10 @@ from ramayana_kg.models import RelationshipType, Verse
 
 
 def test_parse_relationships_valid():
-    raw = '[{"source": "Rama", "target": "Ravana", "rel_type": "KILLS", "description": "In battle"}]'
+    raw = (
+        '[{"source": "Rama", "target": "Ravana",'
+        ' "rel_type": "KILLS", "description": "In battle"}]'
+    )
     verses = [Verse(kanda="Y", kanda_num=6, sarga=1, verse_num=1, text="t")]
     rels = _parse_relationships(raw, verses)
     assert len(rels) == 1
@@ -70,7 +73,10 @@ def test_extract_relationships_batch_calls_openai(sample_verses):
     mock_client = MagicMock()
     mock_response = MagicMock()
     mock_response.choices = [MagicMock()]
-    mock_response.choices[0].message.content = '[{"source": "Rama", "target": "Sita", "rel_type": "SPOUSE_OF"}]'
+    mock_response.choices[0].message.content = (
+        '[{"source": "Rama", "target": "Sita",'
+        ' "rel_type": "SPOUSE_OF"}]'
+    )
     mock_client.chat.completions.create.return_value = mock_response
 
     rels = extract_relationships_batch(sample_verses[:2], client=mock_client)

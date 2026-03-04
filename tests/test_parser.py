@@ -38,7 +38,11 @@ def test_kanda_names():
 
 
 def test_split_stanzas_basic():
-    text = "This is a first stanza with enough text to pass the filter.\n\nThis is a second stanza with enough text to pass the filter too."
+    text = (
+        "This is a first stanza with enough text to pass the filter."
+        "\n\n"
+        "This is a second stanza with enough text to pass the filter too."
+    )
     stanzas = _split_stanzas(text)
     assert len(stanzas) == 2
 

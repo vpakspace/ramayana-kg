@@ -27,7 +27,8 @@ CONTEXT_TEMPLATE = """## Verse Passages
 ## Question
 {question}
 
-Provide a comprehensive answer based on the above context. Reference specific verses when possible."""
+Provide a comprehensive answer based on the above context. \
+Reference specific verses when possible."""
 
 
 def format_verse_passages(results: list[SearchResult]) -> str:
